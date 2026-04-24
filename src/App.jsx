@@ -134,6 +134,16 @@ function Header() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => { document.body.style.overflow = '' }
+  }, [menuOpen])
+
   const toggleTheme = () => setTheme(prev => prev === 'dark' ? 'light' : 'dark')
 
   const scrollNav = [

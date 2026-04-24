@@ -26,7 +26,7 @@ export default function BlogList() {
       </section>
 
       {/* Featured Posts */}
-      {activeCategory === 'Tất cả' && (
+      {activeCategory === 'Tất cả' && featured.length > 0 && (
         <section className="blog-featured container">
           <div className="blog-featured__grid">
             {featured.map(post => (
@@ -51,7 +51,7 @@ export default function BlogList() {
       )}
 
       {/* Category Filter + Post Grid */}
-      <section className="blog-list container">
+      <section className={`blog-list container ${activeCategory !== 'Tất cả' ? 'blog-list--no-featured' : ''}`}>
         <div className="blog-list__header">
           <h2>{activeCategory === 'Tất cả' ? 'Tất Cả Bài Viết' : activeCategory}</h2>
           <div className="blog-filter">
@@ -67,30 +67,45 @@ export default function BlogList() {
           </div>
         </div>
 
-        <div className="blog-list__grid">
-          {filtered.map(post => (
-            <Link to={`/blog/${post.id}`} className="blog-card" key={post.id}>
-              <div className="blog-card__img">
-                <img src={post.thumbnail} alt={post.title} />
-                <span className="blog-tag blog-card__tag">{post.category}</span>
-              </div>
-              <div className="blog-card__body">
-                <div className="blog-card__meta">
-                  <span>{formatDate(post.date)}</span>
-                  <span>·</span>
-                  <span>{post.readTime}</span>
+        {filtered.length > 0 ? (
+          <div className="blog-list__grid">
+            {filtered.map(post => (
+              <Link to={`/blog/${post.id}`} className="blog-card" key={post.id}>
+                <div className="blog-card__img">
+                  <img src={post.thumbnail} alt={post.title} />
+                  <span className="blog-tag blog-card__tag">{post.category}</span>
                 </div>
-                <h3>{post.title}</h3>
-                <p>{post.excerpt}</p>
-                <span className="blog-readmore">Đọc bài viết →</span>
-              </div>
-            </Link>
-          ))}
-        </div>
-
-        {filtered.length === 0 && (
+                <div className="blog-card__body">
+                  <div className="blog-card__meta">
+                    <span>{formatDate(post.date)}</span>
+                    <span>·</span>
+                    <span>{post.readTime}</span>
+                  </div>
+                  <h3>{post.title}</h3>
+                  <p>{post.excerpt}</p>
+                  <span className="blog-readmore">Đọc bài viết →</span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        ) : (
           <div className="blog-empty">
-            <p>Chưa có bài viết nào trong danh mục này.</p>
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" style={{ marginBottom: 16, opacity: 0.5 }}>
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+              <polyline points="14 2 14 8 20 8" />
+              <line x1="16" y1="13" x2="8" y2="13" />
+              <line x1="16" y1="17" x2="8" y2="17" />
+              <polyline points="10 9 9 9 8 9" />
+            </svg>
+            <h3 style={{ marginBottom: 8, fontSize: '1.1rem' }}>Chưa có bài viết</h3>
+            <p>Danh mục "{activeCategory}" hiện chưa có bài viết nào. Hãy quay lại sau nhé!</p>
+            <button
+              className="btn btn--outline"
+              style={{ marginTop: 24 }}
+              onClick={() => setActiveCategory('Tất cả')}
+            >
+              Xem tất cả bài viết
+            </button>
           </div>
         )}
       </section>

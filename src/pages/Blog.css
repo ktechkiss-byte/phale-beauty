@@ -54,7 +54,8 @@
 
 /* ===== FEATURED POSTS ===== */
 .blog-featured {
-  padding: var(--space-2xl) var(--space-lg) var(--space-3xl);
+  padding: var(--space-2xl) var(--space-lg) var(--space-2xl);
+  margin-bottom: var(--space-xl);
 }
 
 .blog-featured__grid {
@@ -138,8 +139,13 @@
 
 /* ===== BLOG LIST ===== */
 .blog-list {
-  padding: var(--space-xl) var(--space-lg) var(--space-4xl);
+  padding: var(--space-2xl) var(--space-lg) var(--space-4xl);
   border-top: 1px solid var(--border);
+  margin-top: var(--space-md);
+}
+
+.blog-list--no-featured {
+  margin-top: var(--space-lg);
 }
 
 .blog-list__header {
@@ -266,8 +272,23 @@
 
 .blog-empty {
   text-align: center;
-  padding: var(--space-4xl) 0;
+  padding: var(--space-4xl) var(--space-lg);
   color: var(--text-muted);
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.blog-empty h3 {
+  color: var(--text-secondary);
+}
+
+.blog-empty p {
+  color: var(--text-muted);
+  max-width: 400px;
+  line-height: 1.6;
 }
 
 @media (max-width: 900px) {
